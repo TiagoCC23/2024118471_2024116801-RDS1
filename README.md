@@ -94,7 +94,9 @@ Nas portas de acesso deverão ser configurados PortFast e BPDU Guard.
 
 #### Segurança das portas de acesso
 
-O PC3 pode tentar assumir a Root Bridge do Spanning Tree ao injetar BPDUs com prioridade 0 e pode enviar pacotes DTP para negociar uma ligação Trunk não autorizada. Nas portas de acesso dos switches A1–A3, as portas ligadas aos PCs e à estação de gestão são fixadas em modo access, com DTP desativado (`switchport nonegotiate`). PortFast, BPDU Guard e Root Guard protegem essas portas contra BPDUs recebidos e tentativas de eleição de uma Root Bridge não autorizada. As configurações estão aplicadas às interfaces Ethernet1/0 e Ethernet1/1 de A1, A2 e A3.
+**Ataque:** O PC3 injeta BPDUs com prioridade 0 para usurpar a posição de Root Bridge do Spanning Tree e envia pacotes DTP para forçar o estabelecimento de ligações Trunk não autorizadas.
+
+**Contramedida:** Aplicar BPDU Guard e Root Guard nas portas de acesso dos switches A1–A3, desativar o DTP com `switchport nonegotiate` e fixar explicitamente as portas em `switchport mode access`.
 
 ### 5.5. Endereçamento IPv4
 
@@ -128,7 +130,7 @@ A seguinte checklist permite acompanhar o desenvolvimento do trabalho e identifi
 - [x] Configurar os Port-Channels.
 - [ ] Confirmar o funcionamento do LACP.
 - [x] Configurar PortFast.
-- [ ] Configurar BPDU Guard.
+- [x] Configurar BPDU Guard.
 - [ ] Configurar Rapid-PVST+.
 - [ ] Definir CD1 e CD2 como Root Primary e Root Secondary, de acordo com as VLANs.
 - [ ] Validar o funcionamento do Spanning Tree.
@@ -159,6 +161,10 @@ A seguinte checklist permite acompanhar o desenvolvimento do trabalho e identifi
 
 Após as configurações, deverão ser realizados testes para confirmar o funcionamento da infraestrutura.
 
+### 7.1. Verificar a proteção contra BPDUs e DTP
+
+O procedimento de ataque, os comandos de validação, a recuperação da porta e os resultados estão no [guia separado](documentation/teste-ataque-bpdu-dtp.md).
+
 | Componente | Comando de verificação |
 |---|---|
 | VLANs | `show vlan brief` |
@@ -176,6 +182,8 @@ Os resultados e as respetivas capturas de ecrã poderão ser guardados na pasta 
 │
 ├── README.md
 ├── topologia.png
+├── documentation/
+│   └── teste-ataque-bpdu-dtp.md
 ├── .gitignore
 │
 └── ProjetoRedes-2024118471_2024116801/
