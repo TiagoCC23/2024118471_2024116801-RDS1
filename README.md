@@ -92,6 +92,10 @@ A distribuição das Root Bridges prevista no enunciado é:
 
 Nas portas de acesso deverão ser configurados PortFast e BPDU Guard.
 
+#### Segurança das portas de acesso
+
+O PC3 pode tentar assumir a Root Bridge do Spanning Tree ao injetar BPDUs com prioridade 0 e pode enviar pacotes DTP para negociar uma ligação Trunk não autorizada. Nas portas de acesso dos switches A1–A3, as portas ligadas aos PCs e à estação de gestão são fixadas em modo access, com DTP desativado (`switchport nonegotiate`). PortFast, BPDU Guard e Root Guard protegem essas portas contra BPDUs recebidos e tentativas de eleição de uma Root Bridge não autorizada. As configurações estão aplicadas às interfaces Ethernet1/0 e Ethernet1/1 de A1, A2 e A3.
+
 ### 5.5. Endereçamento IPv4
 
 O bloco de endereçamento disponibilizado pelo enunciado é:
